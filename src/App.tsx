@@ -219,7 +219,7 @@ function App() {
     return (
       <div className="mb-4">
         <div className="flex justify-between items-center mb-1">
-          <span className="text-lg text-white">{attribute}</span>
+          <span className="text-2xl text-white">{attribute}</span>
           <span className="text-3xl font-bold text-white">
             {value}
           </span>
@@ -299,8 +299,8 @@ function App() {
             <div className="h-full w-full flex flex-col justify-center">
               <div className="mb-6">
                 <div className="flex justify-between items-center mb-1">
-                  <h2 className="text-lg text-white">Your Score</h2>
-                  <div className="text-4xl font-bold text-white">{scores.total}</div>
+                  <h2 className="text-2xl text-white">Your Score</h2>
+                  <div className="text-3xl font-bold text-white">{scores.total}</div>
                 </div>
                 <div className="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
                   <div
