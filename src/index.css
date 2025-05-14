@@ -1,0 +1,134 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* Blue/Purple Gradient Background */
+.bg-gradient-purple-blue {
+  background: linear-gradient(135deg, #1b3289 0%, #43338b 50%, #5c58a2 100%);
+}
+
+/* Webcam container and video styling */
+.webcam-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 350px;
+}
+
+.webcam-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Score animations */
+@keyframes score-reveal {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.score-reveal {
+  animation: score-reveal 0.6s ease-out;
+}
+
+/* Loading spinner animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  border-top-color: #7d72b5;
+  animation: spin 1s ease-in-out infinite;
+}
+
+/* Analyzing animation */
+@keyframes pulseOpacity {
+  0% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.7;
+  }
+}
+
+.pulse-opacity {
+  animation: pulseOpacity 1.5s infinite;
+}
+
+/* Color variables for blue/purple gradient style */
+:root {
+  --background: 233 60% 18%;
+  --foreground: 240 10% 98%;
+  --card: 233 60% 22%;
+  --card-foreground: 240 10% 98%;
+  --popover: 233 60% 22%;
+  --popover-foreground: 240 10% 98%;
+  --primary: 255 60% 60%;
+  --primary-foreground: 240 10% 98%;
+  --secondary: 260 40% 40%;
+  --secondary-foreground: 240 10% 98%;
+  --muted: 240 20% 30%;
+  --muted-foreground: 240 10% 70%;
+  --accent: 270 60% 60%;
+  --accent-foreground: 240 10% 98%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 240 10% 30%;
+  --input: 240 10% 30%;
+  --ring: 255 60% 60%;
+  --radius: 0.5rem;
+  --chart-1: 233 60% 60%;
+  --chart-2: 255 60% 60%;
+  --chart-3: 270 60% 60%;
+  --chart-4: 290 60% 60%;
+  --chart-5: 310 60% 60%;
+}
+
+.dark {
+  --background: 233 60% 10%;
+  --foreground: 240 10% 98%;
+  --card: 233 60% 14%;
+  --card-foreground: 240 10% 98%;
+  --popover: 233 60% 14%;
+  --popover-foreground: 240 10% 98%;
+  --primary: 255 60% 60%;
+  --primary-foreground: 240 10% 98%;
+  --secondary: 260 40% 30%;
+  --secondary-foreground: 240 10% 98%;
+  --muted: 240 20% 20%;
+  --muted-foreground: 240 10% 70%;
+  --accent: 270 60% 60%;
+  --accent-foreground: 240 10% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 240 10% 20%;
+  --input: 240 10% 20%;
+  --ring: 255 60% 60%;
+  --chart-1: 233 60% 60%;
+  --chart-2: 255 60% 60%;
+  --chart-3: 270 60% 60%;
+  --chart-4: 290 60% 60%;
+  --chart-5: 310 60% 60%;
+}
