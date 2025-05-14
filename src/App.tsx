@@ -320,15 +320,6 @@ function App() {
                 <ProgressBar attribute="Dumb" value={scores.dumb} />
                 <ProgressBar attribute="Single" value={scores.single} />
               </div>
-
-              <div className="w-full flex justify-center mt-4">
-                <button
-                  onClick={startAnalysis}
-                  className="px-4 py-2 bg-indigo-600 text-white text-sm rounded-md hover:bg-indigo-700 transition-colors"
-                >
-                  Scan Again
-                </button>
-              </div>
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center h-full">
@@ -339,6 +330,17 @@ function App() {
           )}
         </div>
       </main>
+
+      {scores && (
+        <div className="w-full flex justify-center mt-4">
+          <button
+            onClick={startAnalysis}
+            className="px-6 py-2 bg-indigo-600 text-white text-base rounded-md hover:bg-indigo-700 transition-colors"
+          >
+            Scan Again
+          </button>
+        </div>
+      )}
 
       <footer className="mt-4 text-blue-200 text-xs text-center">
         <p className="md:w-[400px] mx-auto whitespace-normal md:whitespace-nowrap">
