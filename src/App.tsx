@@ -172,27 +172,35 @@ function App() {
     setMessage("Looking for your face...");
   };
 
-  // Get color for score
-  const getAttributeColor = (attribute: string) => {
-    if (attribute === 'charisma') return 'bg-green-500';
-    if (attribute === 'dumbness') return 'bg-orange-400';
-    if (attribute === 'single') return 'bg-pink-400';
-    return 'bg-blue-500';
+  // Get color for the progress bar based on score value
+  const getProgressColor = (value: number) => {
+    if (value >= 80) return 'bg-blue-500'; // High score - blue
+    if (value >= 50) return 'bg-blue-500'; // Medium score - blue
+    return 'bg-blue-500'; // Low score - blue (keeping all blue per screenshot)
+  };
+
+  // Get text color for score
+  const getScoreTextColor = (attribute: string) => {
+    if (attribute === 'charisma') return 'text-pink-400';
+    if (attribute === 'dumbness') return 'text-pink-400';
+    if (attribute === 'single') return 'text-pink-400';
+    return 'text-white';
   };
 
   // Progress bar component
   const ProgressBar = ({ attribute, value }: { attribute: string; value: number }) => {
-    const barColor = getAttributeColor(attribute);
+    const barColor = getProgressColor(value);
+    const textColor = getScoreTextColor(attribute);
 
     return (
-      <div className="mb-8">
-        <div className="flex justify-between items-center mb-2">
-          <span className="text-lg text-white font-semibold">{attribute}</span>
-          <span className={`text-5xl font-bold ${attribute === 'charisma' ? 'text-green-500' : attribute === 'dumbness' ? 'text-orange-400' : 'text-pink-400'}`}>
+      <div className="mb-6">
+        <div className="flex justify-between items-center mb-1">
+          <span className="text-xl text-white">{attribute}</span>
+          <span className={`text-6xl font-bold ${textColor}`}>
             {value}
           </span>
         </div>
-        <div className="h-8 bg-gray-700 rounded-full overflow-hidden">
+        <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
           <div
             className={`h-full ${barColor} transition-all duration-1000`}
             style={{ width: `${value}%` }}
@@ -209,11 +217,11 @@ function App() {
         <p className="text-blue-200 text-lg md:text-xl max-w-xs md:max-w-md mx-auto">Do you look fundable enough? Let's find out!</p>
       </header>
 
-      <main className="w-full max-w-4xl bg-white/10 backdrop-blur-md rounded-2xl shadow-xl overflow-hidden">
-        <div className="grid md:grid-cols-2 gap-4 p-6">
-          <div className="bg-black/20 rounded-xl overflow-hidden">
+      <main className="w-full max-w-6xl bg-white/10 backdrop-blur-md rounded-2xl shadow-xl overflow-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
+          <div className="bg-transparent rounded-xl overflow-hidden h-full">
             {error ? (
-              <div className="flex flex-col items-center justify-center h-[350px] bg-gray-900 p-4 text-white">
+              <div className="flex flex-col items-center justify-center h-full bg-gray-900 p-4 text-white">
                 <div className="text-red-400 text-4xl mb-3">😕</div>
                 <p className="text-center font-semibold mb-2">Camera Error</p>
                 <p className="text-center mb-4">{error}</p>
@@ -225,7 +233,7 @@ function App() {
                 </button>
               </div>
             ) : (
-              <div className="relative h-[350px] bg-gray-900">
+              <div className="relative h-[500px] bg-gray-900">
                 {isLoading && (
                   <div className="absolute inset-0 flex flex-col items-center justify-center z-20 bg-gray-900">
                     <div className="spinner mb-4"></div>
@@ -252,13 +260,13 @@ function App() {
             )}
           </div>
 
-          <div className="flex flex-col justify-center items-center bg-gray-900/50 rounded-xl p-6">
+          <div className="flex flex-col justify-center bg-indigo-900 rounded-none p-10 h-[500px]">
             {scores ? (
-              <div className="h-full w-full flex flex-col justify-center">
-                <div className="mb-6">
+              <div className="h-full w-full flex flex-col justify-between">
+                <div>
                   <h2 className="text-2xl font-bold text-white mb-1">Your Fundability Score</h2>
-                  <div className="text-6xl font-bold text-white mb-2">{scores.total}</div>
-                  <p className="text-md text-blue-300">
+                  <div className="text-8xl font-bold text-white mb-2">{scores.total}</div>
+                  <p className="text-blue-300 mb-10">
                     {scores.total >= 80 ? "VC Material! You're fundable!" :
                      scores.total >= 60 ? "Good potential for funding" :
                      scores.total >= 40 ? "You might get a small investment" :
@@ -266,11 +274,13 @@ function App() {
                   </p>
                 </div>
 
-                <div className="w-full">
+                <div className="w-full flex-grow">
                   <ProgressBar attribute="Charisma" value={scores.charisma} />
                   <ProgressBar attribute="Dumbness" value={scores.dumbness} />
                   <ProgressBar attribute="Single" value={scores.single} />
+                </div>
 
+                <div className="mt-auto">
                   <button
                     onClick={startAnalysis}
                     className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
