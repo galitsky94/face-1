@@ -174,17 +174,28 @@ function App() {
 
   // Progress bar component
   const ProgressBar = ({ attribute, value }: { attribute: string; value: number }) => {
+    // Calculate color based on value (red for low, green for high - except Dumbness which is reversed)
+    const getColorClass = () => {
+      const isReversed = attribute === "Dumbness";
+      const normalizedValue = isReversed ? 100 - value : value;
+
+      if (normalizedValue < 30) return "bg-red-500";
+      if (normalizedValue < 50) return "bg-orange-400";
+      if (normalizedValue < 70) return "bg-yellow-400";
+      return "bg-green-500";
+    };
+
     return (
-      <div className="mb-10">
-        <div className="flex justify-between items-center mb-2">
-          <span className="text-2xl text-white">{attribute}</span>
-          <span className="text-8xl font-bold text-white">
+      <div className="mb-4">
+        <div className="flex justify-between items-center mb-1">
+          <span className="text-base text-white">{attribute}</span>
+          <span className="text-3xl font-bold text-white">
             {value}
           </span>
         </div>
-        <div className="w-full h-2 bg-gray-700 rounded-full mt-2 overflow-hidden">
+        <div className="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
           <div
-            className="h-full bg-blue-500 transition-all duration-1000"
+            className={`h-full transition-all duration-1000 ${getColorClass()}`}
             style={{ width: `${value}%` }}
           ></div>
         </div>
@@ -194,31 +205,31 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 to-purple-900 flex flex-col items-center justify-center p-4">
-      <header className="mb-8 text-center">
-        <h1 className="text-5xl font-bold text-white mb-2">Fund Score</h1>
-        <p className="text-blue-200 text-lg md:text-xl max-w-xs md:max-w-md mx-auto">Do you look fundable enough? Let's find out!</p>
+      <header className="mb-4 text-center">
+        <h1 className="text-2xl font-bold text-white mb-1">Fund Score</h1>
+        <p className="text-blue-200 text-sm max-w-xs md:max-w-md mx-auto">Do you look fundable enough? Let's find out!</p>
       </header>
 
-      <main className="w-full max-w-6xl rounded-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2 shadow-xl">
-        <div className="rounded-tl-2xl rounded-bl-2xl overflow-hidden">
+      <main className="w-full max-w-4xl rounded-xl overflow-hidden grid grid-cols-1 md:grid-cols-2 shadow-xl">
+        <div className="rounded-tl-xl rounded-bl-xl overflow-hidden">
           {error ? (
-            <div className="flex flex-col items-center justify-center h-full min-h-[600px] bg-gray-900 p-4 text-white">
-              <div className="text-red-400 text-4xl mb-3">😕</div>
-              <p className="text-center font-semibold mb-2">Camera Error</p>
-              <p className="text-center mb-4">{error}</p>
+            <div className="flex flex-col items-center justify-center h-full min-h-[350px] bg-gray-900 p-4 text-white">
+              <div className="text-red-400 text-xl mb-2">😕</div>
+              <p className="text-center font-semibold text-sm mb-1">Camera Error</p>
+              <p className="text-center text-xs mb-3">{error}</p>
               <button
                 onClick={() => window.location.reload()}
-                className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
+                className="px-3 py-1 bg-indigo-600 text-white text-sm rounded-md hover:bg-indigo-700 transition-colors"
               >
                 Try Again
               </button>
             </div>
           ) : (
-            <div className="relative min-h-[600px] bg-gray-900">
+            <div className="relative min-h-[350px] bg-gray-900">
               {isLoading && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center z-20 bg-gray-900">
-                  <div className="spinner mb-4"></div>
-                  <p className="text-white">{message}</p>
+                  <div className="spinner mb-3"></div>
+                  <p className="text-white text-sm">{message}</p>
                 </div>
               )}
               <video
@@ -232,22 +243,22 @@ function App() {
                 className="absolute inset-0 w-full h-full"
               />
               {!isLoading && (
-                <div className="absolute bottom-0 left-0 right-0 p-4 text-center bg-gradient-to-t from-black/70 to-transparent">
-                  <p className="text-2xl text-white font-medium">{message}</p>
-                  <p className="text-sm text-blue-200 mt-1">{subMessage}</p>
+                <div className="absolute bottom-0 left-0 right-0 p-2 text-center bg-gradient-to-t from-black/70 to-transparent">
+                  <p className="text-base text-white font-medium">{message}</p>
+                  <p className="text-xs text-blue-200 mt-1">{subMessage}</p>
                 </div>
               )}
             </div>
           )}
         </div>
 
-        <div className="flex flex-col justify-center bg-indigo-900 rounded-tr-2xl rounded-br-2xl p-10 min-h-[600px]">
+        <div className="flex flex-col justify-center bg-indigo-900 rounded-tr-xl rounded-br-xl p-6 min-h-[350px]">
           {scores ? (
             <div className="h-full w-full flex flex-col justify-center">
-              <div className="mb-14">
-                <h2 className="text-2xl font-bold text-white mb-2">Your Fundability Score</h2>
-                <div className="text-9xl font-bold text-white">{scores.total}</div>
-                <p className="text-xl text-blue-300 mt-2">
+              <div className="mb-6">
+                <h2 className="text-base font-bold text-white mb-1">Your Fundability Score</h2>
+                <div className="text-4xl font-bold text-white">{scores.total}</div>
+                <p className="text-sm text-blue-300 mt-1">
                   {scores.total >= 80 ? "VC Material! You're fundable!" :
                    scores.total >= 60 ? "Good potential for funding" :
                    scores.total >= 40 ? "You might get a small investment" :
@@ -264,16 +275,16 @@ function App() {
           ) : (
             <div className="flex flex-col items-center justify-center h-full">
               <div className="text-center text-white">
-                <p className="text-2xl mb-4">Looking for your face...</p>
-                <p className="text-sm opacity-70">Position yourself in front of the camera</p>
+                <p className="text-base mb-2">Looking for your face...</p>
+                <p className="text-xs opacity-70">Position yourself in front of the camera</p>
               </div>
             </div>
           )}
         </div>
       </main>
 
-      <footer className="mt-6 text-blue-200 text-sm text-center">
-        <p className="md:w-[600px] mx-auto whitespace-normal md:whitespace-nowrap">
+      <footer className="mt-4 text-blue-200 text-xs text-center">
+        <p className="md:w-[400px] mx-auto whitespace-normal md:whitespace-nowrap">
           This app is for entertainment purposes only. But you should take it seriously.
         </p>
       </footer>

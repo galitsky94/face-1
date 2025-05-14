@@ -223,12 +223,12 @@ const Webcam = ({ onAnalysisComplete, isAnalyzing, onAnalysisStart }: WebcamProp
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center h-[350px] bg-gray-900 p-4 text-white rounded-xl">
-        <div className="text-red-400 text-4xl mb-3">😕</div>
-        <p className="text-center font-semibold mb-2">Camera Error</p>
-        <p className="text-center mb-4">{error}</p>
+        <div className="text-red-400 text-xl mb-2">😕</div>
+        <p className="text-center font-semibold text-sm mb-1">Camera Error</p>
+        <p className="text-center text-xs mb-3">{error}</p>
         <button
           onClick={() => window.location.reload()}
-          className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
+          className="px-3 py-1 bg-indigo-600 text-white text-sm rounded-md hover:bg-indigo-700 transition-colors"
         >
           Try Again
         </button>
@@ -241,8 +241,8 @@ const Webcam = ({ onAnalysisComplete, isAnalyzing, onAnalysisStart }: WebcamProp
     <div className="relative bg-gray-900 rounded-xl overflow-hidden h-[350px]">
       {(!isCameraReady || !isModelLoaded) ? (
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-900 text-white z-10">
-          <div className="spinner mb-4"></div>
-          <p className="text-center">{message}</p>
+          <div className="spinner mb-3"></div>
+          <p className="text-center text-sm">{message}</p>
         </div>
       ) : null}
 
@@ -265,10 +265,10 @@ const Webcam = ({ onAnalysisComplete, isAnalyzing, onAnalysisStart }: WebcamProp
 
         {isAnalyzing && isCameraReady && isModelLoaded && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50 z-20">
-            <p className="text-2xl text-white mb-3 pulse-opacity">
+            <p className="text-base text-white mb-2 pulse-opacity">
               {message}
             </p>
-            <p className="text-sm text-blue-200 opacity-70">
+            <p className="text-xs text-blue-200 opacity-70">
               Position yourself in front of the camera
             </p>
           </div>

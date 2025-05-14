@@ -137,69 +137,69 @@ const ScoreDisplay: React.FC<ScoreDisplayProps> = ({ scores }) => {
 
   return (
     <div
-      className={`h-full w-full flex flex-col justify-center items-center p-8 transition-all duration-500 transform ${
+      className={`h-full w-full flex flex-col justify-center items-center p-4 transition-all duration-500 transform ${
         visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
       }`}
     >
-      <div className="text-center mb-8">
-        <h2 className="text-4xl font-bold text-white mb-3">Your Fundability Score</h2>
+      <div className="text-center mb-4">
+        <h2 className="text-lg font-bold text-white mb-2">Your Fundability Score</h2>
 
-        <div className="flex flex-col items-center mt-6">
-          <div className="text-8xl font-bold text-white mb-2">{animatedTotal}</div>
-          <div className="h-2 w-64 bg-white/20 rounded-full mt-2 mb-6">
+        <div className="flex flex-col items-center mt-3">
+          <div className="text-4xl font-bold text-white mb-1">{animatedTotal}</div>
+          <div className="h-1.5 w-48 bg-white/20 rounded-full mt-1 mb-3">
             <div
               className="h-full bg-blue-400 rounded-full transition-all duration-1500"
               style={{ width: `${animatedTotal}%` }}
             ></div>
           </div>
-          <p className="text-xl text-blue-200 mt-2">{getFundingVerdict(scores.total)}</p>
+          <p className="text-sm text-blue-200 mt-1">{getFundingVerdict(scores.total)}</p>
         </div>
       </div>
 
       {showDetails && (
-        <div className={`w-full max-w-md space-y-6 transition-all duration-500 transform ${
+        <div className={`w-full max-w-md space-y-3 transition-all duration-500 transform ${
           showDetails ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}>
-          <div className="bg-white/10 rounded-lg p-4">
-            <div className="flex justify-between mb-2">
-              <span className="font-medium text-white">Charisma</span>
-              <span className={`font-bold ${getScoreColor(scores.charisma)}`}>{animatedScores.charisma}/100</span>
+          <div className="bg-white/10 rounded-lg p-3">
+            <div className="flex justify-between mb-1">
+              <span className="font-medium text-white text-sm">Charisma</span>
+              <span className={`font-bold text-sm ${getScoreColor(scores.charisma)}`}>{animatedScores.charisma}/100</span>
             </div>
-            <div className="h-2 bg-white/20 rounded-full mb-2">
+            <div className="h-1.5 bg-white/20 rounded-full mb-1">
               <div
                 className="h-full bg-green-400 rounded-full transition-all duration-1000"
                 style={{ width: `${animatedScores.charisma}%` }}
               ></div>
             </div>
-            <p className="text-sm text-blue-200/80">{getAttributeDescription("charisma", scores.charisma)}</p>
+            <p className="text-xs text-blue-200/80">{getAttributeDescription("charisma", scores.charisma)}</p>
           </div>
 
-          <div className="bg-white/10 rounded-lg p-4">
-            <div className="flex justify-between mb-2">
-              <span className="font-medium text-white">Dumbness</span>
-              <span className={`font-bold ${getScoreColor(scores.dumbness, true)}`}>{animatedScores.dumbness}/100</span>
+          <div className="bg-white/10 rounded-lg p-3">
+            <div className="flex justify-between mb-1">
+              <span className="font-medium text-white text-sm">Dumbness</span>
+              <span className={`font-bold text-sm ${getScoreColor(scores.dumbness, true)}`}>{animatedScores.dumbness}/100</span>
             </div>
-            <div className="h-2 bg-white/20 rounded-full mb-2">
+            <div className="h-1.5 bg-white/20 rounded-full mb-1">
               <div
                 className="h-full bg-red-400 rounded-full transition-all duration-1000"
                 style={{ width: `${animatedScores.dumbness}%` }}
               ></div>
             </div>
-            <p className="text-sm text-blue-200/80">{getAttributeDescription("dumbness", scores.dumbness)}</p>
+            <p className="text-xs text-blue-200/80">{getAttributeDescription("dumbness", scores.dumbness)}</p>
           </div>
 
-          <div className="bg-white/10 rounded-lg p-4">
-            <div className="flex justify-between mb-2">
-              <span className="font-medium text-white">Single</span>
-              <span className={`font-bold ${getScoreColor(scores.single)}`}>{animatedScores.single}/100</span>
+          <div className="bg-white/10 rounded-lg p-3">
+            <div className="flex justify-between mb-1">
+              <span className="font-medium text-white text-sm">Single</span>
+              <span className={`font-bold text-sm ${getScoreColor(scores.single)}`}>{animatedScores.single}/100</span>
             </div>
-            <div className="h-2 bg-white/20 rounded-full mb-2">
+            <div className="h-1.5 bg-white/20 rounded-full mb-1">
               <div
                 className="h-full bg-blue-400 rounded-full transition-all duration-1000"
                 style={{ width: `${animatedScores.single}%` }}
               ></div>
             </div>
-            <p className="text-sm text-blue-200/80">{getAttributeDescription("single", scores.single)}</p>
+            <p className="text-xs text-blue-200/80">{getAttributeDescription("single", scores.single)}</p>
           </div>
         </div>
       )}

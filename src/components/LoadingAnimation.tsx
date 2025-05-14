@@ -24,9 +24,9 @@ const LoadingAnimation: React.FC<LoadingAnimationProps> = ({
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center h-full py-12">
-      <div className="spinner mb-6"></div>
-      <p className="text-white text-xl">
+    <div className="flex flex-col items-center justify-center h-full py-6">
+      <div className="spinner mb-3"></div>
+      <p className="text-white text-sm">
         {message}{dots}
       </p>
     </div>
