@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 interface ScoreDisplayProps {
   scores: {
-    charisma: number;
-    dumbness: number;
+    charismatic: number;
+    dumb: number;
     single: number;
     total: number;
   } | null;
@@ -12,8 +12,8 @@ interface ScoreDisplayProps {
 const ScoreDisplay: React.FC<ScoreDisplayProps> = ({ scores }) => {
   const [animatedTotal, setAnimatedTotal] = useState(0);
   const [animatedScores, setAnimatedScores] = useState({
-    charisma: 0,
-    dumbness: 0,
+    charismatic: 0,
+    dumb: 0,
     single: 0
   });
   const [visible, setVisible] = useState(false);
@@ -52,29 +52,29 @@ const ScoreDisplay: React.FC<ScoreDisplayProps> = ({ scores }) => {
     const attrSteps = attrDuration / attrInterval;
 
     setTimeout(() => {
-      let current = { charisma: 0, dumbness: 0, single: 0 };
+      let current = { charismatic: 0, dumb: 0, single: 0 };
       const increments = {
-        charisma: scores.charisma / attrSteps,
-        dumbness: scores.dumbness / attrSteps,
+        charismatic: scores.charismatic / attrSteps,
+        dumb: scores.dumb / attrSteps,
         single: scores.single / attrSteps
       };
 
       const attrTimer = setInterval(() => {
         current = {
-          charisma: Math.min(scores.charisma, current.charisma + increments.charisma),
-          dumbness: Math.min(scores.dumbness, current.dumbness + increments.dumbness),
+          charismatic: Math.min(scores.charismatic, current.charismatic + increments.charismatic),
+          dumb: Math.min(scores.dumb, current.dumb + increments.dumb),
           single: Math.min(scores.single, current.single + increments.single)
         };
 
         setAnimatedScores({
-          charisma: Math.round(current.charisma),
-          dumbness: Math.round(current.dumbness),
+          charismatic: Math.round(current.charismatic),
+          dumb: Math.round(current.dumb),
           single: Math.round(current.single)
         });
 
         if (
-          current.charisma >= scores.charisma &&
-          current.dumbness >= scores.dumbness &&
+          current.charismatic >= scores.charismatic &&
+          current.dumb >= scores.dumb &&
           current.single >= scores.single
         ) {
           clearInterval(attrTimer);
@@ -104,13 +104,13 @@ const ScoreDisplay: React.FC<ScoreDisplayProps> = ({ scores }) => {
 
   // Get attribute descriptions
   const getAttributeDescription = (name: string, score: number): string => {
-    if (name === "charisma") {
+    if (name === "charismatic") {
       if (score >= 80) return "You could charm money from a VC's wallet!";
       if (score >= 50) return "You can hold a conversation without mentioning blockchain.";
       return "Maybe practice your elevator pitch in the mirror?";
     }
 
-    if (name === "dumbness") {
+    if (name === "dumb") {
       if (score <= 30) return "Your intelligence is showing!";
       if (score <= 60) return "Smart enough to know what you don't know.";
       return "Have you tried turning your brain off and on again?";
@@ -162,30 +162,30 @@ const ScoreDisplay: React.FC<ScoreDisplayProps> = ({ scores }) => {
         }`}>
           <div className="bg-white/10 rounded-lg p-3">
             <div className="flex justify-between mb-1">
-              <span className="font-medium text-white text-sm">Charisma</span>
-              <span className={`font-bold text-sm ${getScoreColor(scores.charisma)}`}>{animatedScores.charisma}/100</span>
+              <span className="font-medium text-white text-sm">Charismatic</span>
+              <span className={`font-bold text-sm ${getScoreColor(scores.charismatic)}`}>{animatedScores.charismatic}/100</span>
             </div>
             <div className="h-1.5 bg-white/20 rounded-full mb-1">
               <div
                 className="h-full bg-green-400 rounded-full transition-all duration-1000"
-                style={{ width: `${animatedScores.charisma}%` }}
+                style={{ width: `${animatedScores.charismatic}%` }}
               ></div>
             </div>
-            <p className="text-xs text-blue-200/80">{getAttributeDescription("charisma", scores.charisma)}</p>
+            <p className="text-xs text-blue-200/80">{getAttributeDescription("charismatic", scores.charismatic)}</p>
           </div>
 
           <div className="bg-white/10 rounded-lg p-3">
             <div className="flex justify-between mb-1">
-              <span className="font-medium text-white text-sm">Dumbness</span>
-              <span className={`font-bold text-sm ${getScoreColor(scores.dumbness, true)}`}>{animatedScores.dumbness}/100</span>
+              <span className="font-medium text-white text-sm">Dumb</span>
+              <span className={`font-bold text-sm ${getScoreColor(scores.dumb, true)}`}>{animatedScores.dumb}/100</span>
             </div>
             <div className="h-1.5 bg-white/20 rounded-full mb-1">
               <div
                 className="h-full bg-red-400 rounded-full transition-all duration-1000"
-                style={{ width: `${animatedScores.dumbness}%` }}
+                style={{ width: `${animatedScores.dumb}%` }}
               ></div>
             </div>
-            <p className="text-xs text-blue-200/80">{getAttributeDescription("dumbness", scores.dumbness)}</p>
+            <p className="text-xs text-blue-200/80">{getAttributeDescription("dumb", scores.dumb)}</p>
           </div>
 
           <div className="bg-white/10 rounded-lg p-3">

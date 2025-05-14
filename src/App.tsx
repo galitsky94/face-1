@@ -9,8 +9,8 @@ function App() {
   const [message, setMessage] = useState("Requesting camera access...");
   const [subMessage, setSubMessage] = useState("Position yourself in front of the camera");
   const [scores, setScores] = useState<{
-    charisma: number;
-    dumbness: number;
+    charismatic: number;
+    dumb: number;
     single: number;
     total: number;
   } | null>(null);
@@ -153,14 +153,14 @@ function App() {
     // Generate random scores after 3 seconds
     const scoreTimer = setTimeout(() => {
       // Generate random scores
-      const charisma = Math.floor(Math.random() * 100);
-      const dumbness = Math.floor(Math.random() * 100);
+      const charismatic = Math.floor(Math.random() * 100);
+      const dumb = Math.floor(Math.random() * 100);
       const single = Math.floor(Math.random() * 100);
-      const total = Math.floor((charisma * 0.4 + (100 - dumbness) * 0.3 + single * 0.3) * 0.8 + Math.random() * 20);
+      const total = Math.floor((charismatic * 0.4 + (100 - dumb) * 0.3 + single * 0.3) * 0.8 + Math.random() * 20);
 
       setScores({
-        charisma,
-        dumbness,
+        charismatic,
+        dumb,
         single,
         total: Math.min(100, total)
       });
@@ -184,9 +184,9 @@ function App() {
 
   // Progress bar component
   const ProgressBar = ({ attribute, value }: { attribute: string; value: number }) => {
-    // Calculate color based on value (red for low, green for high - except Dumbness which is reversed)
+    // Calculate color based on value (red for low, green for high - except Dumb which is reversed)
     const getColorClass = () => {
-      const isReversed = attribute === "Dumbness";
+      const isReversed = attribute === "Dumb";
       const normalizedValue = isReversed ? 100 - value : value;
 
       if (normalizedValue < 30) return "bg-red-500";
@@ -297,8 +297,8 @@ function App() {
               </div>
 
               <div className="w-full">
-                <ProgressBar attribute="Charisma" value={scores.charisma} />
-                <ProgressBar attribute="Dumbness" value={scores.dumbness} />
+                <ProgressBar attribute="Charismatic" value={scores.charismatic} />
+                <ProgressBar attribute="Dumb" value={scores.dumb} />
                 <ProgressBar attribute="Single" value={scores.single} />
               </div>
 

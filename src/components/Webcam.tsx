@@ -3,8 +3,8 @@ import * as faceapi from 'face-api.js';
 
 interface WebcamProps {
   onAnalysisComplete: (attributes: {
-    charisma: number;
-    dumbness: number;
+    charismatic: number;
+    dumb: number;
     single: number;
     total: number;
   }) => void;
@@ -196,14 +196,14 @@ const Webcam = ({ onAnalysisComplete, isAnalyzing, onAnalysisStart }: WebcamProp
     // Generate random scores after 3 seconds
     const scoreTimer = setTimeout(() => {
       // Generate random scores
-      const charisma = Math.floor(Math.random() * 100);
-      const dumbness = Math.floor(Math.random() * 100);
+      const charismatic = Math.floor(Math.random() * 100);
+      const dumb = Math.floor(Math.random() * 100);
       const single = Math.floor(Math.random() * 100);
-      const total = Math.floor((charisma * 0.4 + (100 - dumbness) * 0.3 + single * 0.3) * 0.8 + Math.random() * 20);
+      const total = Math.floor((charismatic * 0.4 + (100 - dumb) * 0.3 + single * 0.3) * 0.8 + Math.random() * 20);
 
       onAnalysisComplete({
-        charisma,
-        dumbness,
+        charismatic,
+        dumb,
         single,
         total: Math.min(100, total)
       });
