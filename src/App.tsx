@@ -172,37 +172,19 @@ function App() {
     setMessage("Looking for your face...");
   };
 
-  // Get color for the progress bar based on score value
-  const getProgressColor = (value: number) => {
-    if (value >= 80) return 'bg-blue-500'; // High score - blue
-    if (value >= 50) return 'bg-blue-500'; // Medium score - blue
-    return 'bg-blue-500'; // Low score - blue (keeping all blue per screenshot)
-  };
-
-  // Get text color for score
-  const getScoreTextColor = (attribute: string) => {
-    if (attribute === 'charisma') return 'text-pink-400';
-    if (attribute === 'dumbness') return 'text-pink-400';
-    if (attribute === 'single') return 'text-pink-400';
-    return 'text-white';
-  };
-
   // Progress bar component
   const ProgressBar = ({ attribute, value }: { attribute: string; value: number }) => {
-    const barColor = getProgressColor(value);
-    const textColor = getScoreTextColor(attribute);
-
     return (
-      <div className="mb-6">
-        <div className="flex justify-between items-center mb-1">
-          <span className="text-xl text-white">{attribute}</span>
-          <span className={`text-6xl font-bold ${textColor}`}>
+      <div className="mb-10">
+        <div className="flex justify-between items-center mb-2">
+          <span className="text-2xl text-white">{attribute}</span>
+          <span className="text-8xl font-bold text-white">
             {value}
           </span>
         </div>
-        <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
+        <div className="w-full h-2 bg-gray-700 rounded-full mt-2 overflow-hidden">
           <div
-            className={`h-full ${barColor} transition-all duration-1000`}
+            className="h-full bg-blue-500 transition-all duration-1000"
             style={{ width: `${value}%` }}
           ></div>
         </div>
@@ -217,87 +199,76 @@ function App() {
         <p className="text-blue-200 text-lg md:text-xl max-w-xs md:max-w-md mx-auto">Do you look fundable enough? Let's find out!</p>
       </header>
 
-      <main className="w-full max-w-6xl bg-white/10 backdrop-blur-md rounded-2xl shadow-xl overflow-hidden">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
-          <div className="bg-transparent rounded-xl overflow-hidden h-full">
-            {error ? (
-              <div className="flex flex-col items-center justify-center h-full bg-gray-900 p-4 text-white">
-                <div className="text-red-400 text-4xl mb-3">😕</div>
-                <p className="text-center font-semibold mb-2">Camera Error</p>
-                <p className="text-center mb-4">{error}</p>
-                <button
-                  onClick={() => window.location.reload()}
-                  className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
-                >
-                  Try Again
-                </button>
-              </div>
-            ) : (
-              <div className="relative h-[500px] bg-gray-900">
-                {isLoading && (
-                  <div className="absolute inset-0 flex flex-col items-center justify-center z-20 bg-gray-900">
-                    <div className="spinner mb-4"></div>
-                    <p className="text-white">{message}</p>
-                  </div>
-                )}
-                <video
-                  ref={videoRef}
-                  className="absolute inset-0 w-full h-full object-cover"
-                  playsInline
-                  muted
-                />
-                <canvas
-                  ref={canvasRef}
-                  className="absolute inset-0 w-full h-full"
-                />
-                {!isLoading && (
-                  <div className="absolute bottom-0 left-0 right-0 p-4 text-center bg-gradient-to-t from-black/70 to-transparent">
-                    <p className="text-2xl text-white font-medium">{message}</p>
-                    <p className="text-sm text-blue-200 mt-1">{subMessage}</p>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
+      <main className="w-full max-w-6xl rounded-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2 shadow-xl">
+        <div className="rounded-tl-2xl rounded-bl-2xl overflow-hidden">
+          {error ? (
+            <div className="flex flex-col items-center justify-center h-full min-h-[600px] bg-gray-900 p-4 text-white">
+              <div className="text-red-400 text-4xl mb-3">😕</div>
+              <p className="text-center font-semibold mb-2">Camera Error</p>
+              <p className="text-center mb-4">{error}</p>
+              <button
+                onClick={() => window.location.reload()}
+                className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
+              >
+                Try Again
+              </button>
+            </div>
+          ) : (
+            <div className="relative min-h-[600px] bg-gray-900">
+              {isLoading && (
+                <div className="absolute inset-0 flex flex-col items-center justify-center z-20 bg-gray-900">
+                  <div className="spinner mb-4"></div>
+                  <p className="text-white">{message}</p>
+                </div>
+              )}
+              <video
+                ref={videoRef}
+                className="absolute inset-0 w-full h-full object-cover"
+                playsInline
+                muted
+              />
+              <canvas
+                ref={canvasRef}
+                className="absolute inset-0 w-full h-full"
+              />
+              {!isLoading && (
+                <div className="absolute bottom-0 left-0 right-0 p-4 text-center bg-gradient-to-t from-black/70 to-transparent">
+                  <p className="text-2xl text-white font-medium">{message}</p>
+                  <p className="text-sm text-blue-200 mt-1">{subMessage}</p>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
 
-          <div className="flex flex-col justify-center bg-indigo-900 rounded-none p-10 h-[500px]">
-            {scores ? (
-              <div className="h-full w-full flex flex-col justify-between">
-                <div>
-                  <h2 className="text-2xl font-bold text-white mb-1">Your Fundability Score</h2>
-                  <div className="text-8xl font-bold text-white mb-2">{scores.total}</div>
-                  <p className="text-blue-300 mb-10">
-                    {scores.total >= 80 ? "VC Material! You're fundable!" :
-                     scores.total >= 60 ? "Good potential for funding" :
-                     scores.total >= 40 ? "You might get a small investment" :
-                     "Maybe try bootstrapping instead"}
-                  </p>
-                </div>
-
-                <div className="w-full flex-grow">
-                  <ProgressBar attribute="Charisma" value={scores.charisma} />
-                  <ProgressBar attribute="Dumbness" value={scores.dumbness} />
-                  <ProgressBar attribute="Single" value={scores.single} />
-                </div>
-
-                <div className="mt-auto">
-                  <button
-                    onClick={startAnalysis}
-                    className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
-                  >
-                    Analyze Again
-                  </button>
-                </div>
+        <div className="flex flex-col justify-center bg-indigo-900 rounded-tr-2xl rounded-br-2xl p-10 min-h-[600px]">
+          {scores ? (
+            <div className="h-full w-full flex flex-col justify-center">
+              <div className="mb-14">
+                <h2 className="text-2xl font-bold text-white mb-2">Your Fundability Score</h2>
+                <div className="text-9xl font-bold text-white">{scores.total}</div>
+                <p className="text-xl text-blue-300 mt-2">
+                  {scores.total >= 80 ? "VC Material! You're fundable!" :
+                   scores.total >= 60 ? "Good potential for funding" :
+                   scores.total >= 40 ? "You might get a small investment" :
+                   "Maybe try bootstrapping instead"}
+                </p>
               </div>
-            ) : (
-              <div className="flex flex-col items-center justify-center h-full">
-                <div className="text-center text-white">
-                  <p className="text-2xl mb-4">Looking for your face...</p>
-                  <p className="text-sm opacity-70">Position yourself in front of the camera</p>
-                </div>
+
+              <div className="w-full">
+                <ProgressBar attribute="Charisma" value={scores.charisma} />
+                <ProgressBar attribute="Dumbness" value={scores.dumbness} />
+                <ProgressBar attribute="Single" value={scores.single} />
               </div>
-            )}
-          </div>
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center h-full">
+              <div className="text-center text-white">
+                <p className="text-2xl mb-4">Looking for your face...</p>
+                <p className="text-sm opacity-70">Position yourself in front of the camera</p>
+              </div>
+            </div>
+          )}
         </div>
       </main>
 
