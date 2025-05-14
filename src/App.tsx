@@ -262,8 +262,12 @@ function App() {
               )}
               {!isLoading && (
                 <div className="absolute bottom-0 left-0 right-0 p-2 text-center bg-gradient-to-t from-black/70 to-transparent">
-                  <p className="text-base text-white font-medium">{message}</p>
-                  <p className="text-xs text-blue-200 mt-1">{subMessage}</p>
+                  {isAnalyzing && (
+                    <>
+                      <p className="text-base text-white font-medium">{message}</p>
+                      <p className="text-xs text-blue-200 mt-1">{subMessage}</p>
+                    </>
+                  )}
                 </div>
               )}
             </div>
@@ -274,9 +278,17 @@ function App() {
           {scores ? (
             <div className="h-full w-full flex flex-col justify-center">
               <div className="mb-6">
-                <h2 className="text-base font-bold text-white mb-1">Your Fundability Score</h2>
-                <div className="text-4xl font-bold text-white">{scores.total}</div>
-                <p className="text-sm text-blue-300 mt-1">
+                <div className="flex justify-between items-center mb-1">
+                  <h2 className="text-base font-bold text-white">Your Fundability Score</h2>
+                  <div className="text-4xl font-bold text-white">{scores.total}</div>
+                </div>
+                <div className="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
+                  <div
+                    className={`h-full transition-all duration-1000 ${scores.total >= 70 ? 'bg-green-500' : scores.total >= 50 ? 'bg-yellow-400' : 'bg-red-500'}`}
+                    style={{ width: `${scores.total}%` }}
+                  ></div>
+                </div>
+                <p className="text-sm text-blue-300 mt-2">
                   {scores.total >= 80 ? "VC Material! You're fundable!" :
                    scores.total >= 60 ? "Good potential for funding" :
                    scores.total >= 40 ? "You might get a small investment" :

@@ -263,7 +263,6 @@ const Webcam = ({ onAnalysisComplete, isAnalyzing, onAnalysisStart }: WebcamProp
           height="480"
         />
 
-        {/* Scanning Animation */}
         {isAnalyzing && isCameraReady && isModelLoaded && (
           <>
             <div className="scan-container">
