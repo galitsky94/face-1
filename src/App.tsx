@@ -7,7 +7,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [message, setMessage] = useState("Requesting camera access...");
-  const [subMessage, setSubMessage] = useState("Position yourself in front of the camera");
+  // Remove the subMessage state since we don't need it anymore
   const [scores, setScores] = useState<{
     charismatic: number;
     dumb: number;
@@ -265,7 +265,6 @@ function App() {
                   {isAnalyzing && (
                     <>
                       <p className="text-base text-white font-medium">{message}</p>
-                      <p className="text-xs text-blue-200 mt-1">{subMessage}</p>
                     </>
                   )}
                 </div>
@@ -313,7 +312,6 @@ function App() {
             <div className="flex flex-col items-center justify-center h-full">
               <div className="text-center text-white">
                 <p className="text-base mb-2">Looking for your face...</p>
-                <p className="text-xs opacity-70">Position yourself in front of the camera</p>
               </div>
             </div>
           )}

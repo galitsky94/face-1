@@ -275,9 +275,7 @@ const Webcam = ({ onAnalysisComplete, isAnalyzing, onAnalysisStart }: WebcamProp
               <p className="text-base text-white mb-2 pulse-opacity">
                 {message}
               </p>
-              <p className="text-xs text-blue-200 opacity-70">
-                Position yourself in front of the camera
-              </p>
+              {/* Removing the "Position yourself in front of the camera" text */}
             </div>
           </>
         )}
