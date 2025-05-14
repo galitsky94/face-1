@@ -172,6 +172,36 @@ function App() {
     setMessage("Looking for your face...");
   };
 
+  // Get color for score
+  const getAttributeColor = (attribute: string) => {
+    if (attribute === 'charisma') return 'bg-green-500';
+    if (attribute === 'dumbness') return 'bg-orange-400';
+    if (attribute === 'single') return 'bg-pink-400';
+    return 'bg-blue-500';
+  };
+
+  // Progress bar component
+  const ProgressBar = ({ attribute, value }: { attribute: string; value: number }) => {
+    const barColor = getAttributeColor(attribute);
+
+    return (
+      <div className="mb-8">
+        <div className="flex justify-between items-center mb-2">
+          <span className="text-lg text-white font-semibold">{attribute}</span>
+          <span className={`text-5xl font-bold ${attribute === 'charisma' ? 'text-green-500' : attribute === 'dumbness' ? 'text-orange-400' : 'text-pink-400'}`}>
+            {value}
+          </span>
+        </div>
+        <div className="h-8 bg-gray-700 rounded-full overflow-hidden">
+          <div
+            className={`h-full ${barColor} transition-all duration-1000`}
+            style={{ width: `${value}%` }}
+          ></div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 to-purple-900 flex flex-col items-center justify-center p-4">
       <header className="mb-8 text-center">
@@ -222,37 +252,28 @@ function App() {
             )}
           </div>
 
-          <div className="flex flex-col justify-center items-center">
+          <div className="flex flex-col justify-center items-center bg-gray-900/50 rounded-xl p-6">
             {scores ? (
-              <div className="h-full w-full flex flex-col justify-center items-center p-4">
-                <div className="text-center mb-6">
-                  <h2 className="text-3xl font-bold text-white mb-3">Your Fundability Score</h2>
-                  <div className="text-7xl font-bold text-white mb-2">{scores.total}</div>
-                  <p className="text-xl text-blue-300 mb-6">
+              <div className="h-full w-full flex flex-col justify-center">
+                <div className="mb-6">
+                  <h2 className="text-2xl font-bold text-white mb-1">Your Fundability Score</h2>
+                  <div className="text-6xl font-bold text-white mb-2">{scores.total}</div>
+                  <p className="text-md text-blue-300">
                     {scores.total >= 80 ? "VC Material! You're fundable!" :
                      scores.total >= 60 ? "Good potential for funding" :
                      scores.total >= 40 ? "You might get a small investment" :
                      "Maybe try bootstrapping instead"}
                   </p>
+                </div>
 
-                  <div className="grid grid-cols-3 gap-3 mt-4">
-                    <div className="bg-white/10 p-3 rounded-lg">
-                      <div className="text-lg font-semibold text-white">Charisma</div>
-                      <div className="text-2xl text-green-400">{scores.charisma}</div>
-                    </div>
-                    <div className="bg-white/10 p-3 rounded-lg">
-                      <div className="text-lg font-semibold text-white">Dumbness</div>
-                      <div className="text-2xl text-red-400">{scores.dumbness}</div>
-                    </div>
-                    <div className="bg-white/10 p-3 rounded-lg">
-                      <div className="text-lg font-semibold text-white">Single</div>
-                      <div className="text-2xl text-blue-400">{scores.single}</div>
-                    </div>
-                  </div>
+                <div className="w-full">
+                  <ProgressBar attribute="Charisma" value={scores.charisma} />
+                  <ProgressBar attribute="Dumbness" value={scores.dumbness} />
+                  <ProgressBar attribute="Single" value={scores.single} />
 
                   <button
                     onClick={startAnalysis}
-                    className="mt-6 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
+                    className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
                   >
                     Analyze Again
                   </button>
