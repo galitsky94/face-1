@@ -77,6 +77,95 @@ body {
   animation: pulseOpacity 1.5s infinite;
 }
 
+/* Scanning animation */
+@keyframes scanLine {
+  0% {
+    top: 0%;
+  }
+  50% {
+    top: 100%;
+  }
+  100% {
+    top: 0%;
+  }
+}
+
+@keyframes scanGlow {
+  0% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0.3;
+  }
+}
+
+.scan-line {
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(to right,
+    rgba(0, 212, 255, 0) 0%,
+    rgba(0, 212, 255, 0.5) 20%,
+    rgba(64, 224, 208, 0.8) 50%,
+    rgba(0, 212, 255, 0.5) 80%,
+    rgba(0, 212, 255, 0) 100%);
+  animation: scanLine 2.5s ease-in-out infinite;
+  z-index: 15;
+  left: 0;
+  box-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+}
+
+.scan-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 15;
+  pointer-events: none;
+}
+
+.scan-corners::before,
+.scan-corners::after,
+.scan-corners > span::before,
+.scan-corners > span::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-color: rgba(64, 224, 208, 0.8);
+  animation: scanGlow 2.5s ease-in-out infinite;
+}
+
+.scan-corners::before {
+  top: 0;
+  left: 0;
+  border-top: 2px solid;
+  border-left: 2px solid;
+}
+
+.scan-corners::after {
+  top: 0;
+  right: 0;
+  border-top: 2px solid;
+  border-right: 2px solid;
+}
+
+.scan-corners > span::before {
+  bottom: 0;
+  left: 0;
+  border-bottom: 2px solid;
+  border-left: 2px solid;
+}
+
+.scan-corners > span::after {
+  bottom: 0;
+  right: 0;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+}
+
 /* Color variables for blue/purple gradient style */
 :root {
   --background: 233 60% 18%;

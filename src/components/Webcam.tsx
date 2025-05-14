@@ -263,15 +263,24 @@ const Webcam = ({ onAnalysisComplete, isAnalyzing, onAnalysisStart }: WebcamProp
           height="480"
         />
 
+        {/* Scanning Animation */}
         {isAnalyzing && isCameraReady && isModelLoaded && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50 z-20">
-            <p className="text-base text-white mb-2 pulse-opacity">
-              {message}
-            </p>
-            <p className="text-xs text-blue-200 opacity-70">
-              Position yourself in front of the camera
-            </p>
-          </div>
+          <>
+            <div className="scan-container">
+              <div className="scan-line"></div>
+              <div className="scan-corners">
+                <span></span>
+              </div>
+            </div>
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-40 z-20">
+              <p className="text-base text-white mb-2 pulse-opacity">
+                {message}
+              </p>
+              <p className="text-xs text-blue-200 opacity-70">
+                Position yourself in front of the camera
+              </p>
+            </div>
+          </>
         )}
       </div>
     </div>

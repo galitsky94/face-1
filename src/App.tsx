@@ -16,6 +16,16 @@ function App() {
   } | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  // For demo purposes - start in analyzing mode immediately
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!scores && !isAnalyzing && !isLoading) {
+        startAnalysis();
+      }
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [isLoading, isAnalyzing, scores]);
+
   // Initialize webcam and face detection
   useEffect(() => {
     let stream: MediaStream | null = null;
@@ -242,6 +252,14 @@ function App() {
                 ref={canvasRef}
                 className="absolute inset-0 w-full h-full"
               />
+              {isAnalyzing && !isLoading && (
+                <div className="scan-container pointer-events-none absolute inset-0 z-30">
+                  <div className="scan-line"></div>
+                  <div className="scan-corners">
+                    <span></span>
+                  </div>
+                </div>
+              )}
               {!isLoading && (
                 <div className="absolute bottom-0 left-0 right-0 p-2 text-center bg-gradient-to-t from-black/70 to-transparent">
                   <p className="text-base text-white font-medium">{message}</p>
@@ -271,6 +289,13 @@ function App() {
                 <ProgressBar attribute="Dumbness" value={scores.dumbness} />
                 <ProgressBar attribute="Single" value={scores.single} />
               </div>
+
+              <button
+                onClick={startAnalysis}
+                className="mt-4 px-4 py-2 bg-indigo-600 text-white text-sm rounded-md hover:bg-indigo-700 transition-colors self-center"
+              >
+                Scan Again
+              </button>
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center h-full">
@@ -288,6 +313,64 @@ function App() {
           This app is for entertainment purposes only. But you should take it seriously.
         </p>
       </footer>
+
+      {/* Scanning animation styles */}
+      <style>{`
+        .spinner {
+          border: 4px solid #4f46e5;
+          border-top: 4px solid #fff;
+          border-radius: 50%;
+          width: 36px;
+          height: 36px;
+          animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+          0% { transform: rotate(0deg);}
+          100% { transform: rotate(360deg);}
+        }
+        .scan-container {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          pointer-events: none;
+        }
+        .scan-line {
+          position: absolute;
+          left: 0;
+          right: 0;
+          height: 3px;
+          background: linear-gradient(90deg, rgba(99, 102, 241, 0.2) 0%, rgba(99, 102, 241, 0.8) 20%, rgba(167, 139, 250, 0.9) 50%, rgba(99, 102, 241, 0.8) 80%, rgba(99, 102, 241, 0.2) 100%);
+          border-radius: 2px;
+          animation: scan-move 2s linear infinite;
+          z-index: 2;
+          box-shadow: 0 0 5px rgba(167, 139, 250, 0.8);
+        }
+        @keyframes scan-move {
+          0% { top: 5%; opacity: 0.6;}
+          10% { opacity: 0.9;}
+          50% { top: 95%; opacity: 0.9;}
+          90% { opacity: 0.9;}
+          100% { top: 5%; opacity: 0.6;}
+        }
+        .scan-corners {
+          position: absolute;
+          left: 5%;
+          right: 5%;
+          top: 5%;
+          bottom: 5%;
+          z-index: 1;
+          pointer-events: none;
+        }
+        .scan-corners span {
+          display: block;
+          width: 100%;
+          height: 100%;
+          border: 3px solid rgba(167, 139, 250, 0.6);
+          border-radius: 10px;
+          box-sizing: border-box;
+          box-shadow: 0 0 10px rgba(99, 102, 241, 0.3) inset;
+        }
+      `}</style>
     </div>
   );
 }
