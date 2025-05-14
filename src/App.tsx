@@ -321,12 +321,14 @@ function App() {
                 <ProgressBar attribute="Single" value={scores.single} />
               </div>
 
-              <button
-                onClick={startAnalysis}
-                className="mt-4 px-4 py-2 bg-indigo-600 text-white text-sm rounded-md hover:bg-indigo-700 transition-colors self-center"
-              >
-                Scan Again
-              </button>
+              <div className="w-full flex justify-center mt-4">
+                <button
+                  onClick={startAnalysis}
+                  className="px-4 py-2 bg-indigo-600 text-white text-sm rounded-md hover:bg-indigo-700 transition-colors"
+                >
+                  Scan Again
+                </button>
+              </div>
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center h-full">
