@@ -195,17 +195,39 @@ const Webcam = ({ onAnalysisComplete, isAnalyzing, onAnalysisStart }: WebcamProp
 
     // Generate random scores after 3 seconds
     const scoreTimer = setTimeout(() => {
-      // Generate random scores
-      const charismatic = Math.floor(Math.random() * 100);
-      const dumb = Math.floor(Math.random() * 100);
-      const single = Math.floor(Math.random() * 100);
-      const total = Math.floor((charismatic * 0.4 + (100 - dumb) * 0.3 + single * 0.3) * 0.8 + Math.random() * 20);
+      // Generate random scores with constraints
+      // 1. Dumb: never over 60
+      const dumb = Math.floor(Math.random() * 61); // 0-60
+
+      // 2. Charismatic: never below 40
+      const charismatic = Math.floor(Math.random() * 61) + 40; // 40-100
+
+      // 3. Single: either below 20 or over 80
+      const single = Math.random() < 0.5
+        ? Math.floor(Math.random() * 21)  // 0-20
+        : Math.floor(Math.random() * 21) + 80; // 80-100
+
+      // Calculate raw score
+      const rawScore = (charismatic * 0.4 + (100 - dumb) * 0.3 + single * 0.3);
+
+      // Map raw score to one of three ranges
+      let total;
+      if (rawScore < 40) {
+        // Low range (below 30)
+        total = Math.floor(Math.random() * 30);
+      } else if (rawScore < 70) {
+        // Medium range (40-60)
+        total = Math.floor(Math.random() * 21) + 40;
+      } else {
+        // High range (70-90)
+        total = Math.floor(Math.random() * 21) + 70;
+      }
 
       onAnalysisComplete({
         charismatic,
         dumb,
         single,
-        total: Math.min(100, total)
+        total
       });
 
       clearInterval(messageInterval);
