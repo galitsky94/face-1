@@ -215,9 +215,9 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 to-purple-900 flex flex-col items-center justify-center p-4">
-      <header className="mb-4 text-center">
-        <h1 className="text-2xl font-bold text-white mb-1">Fund Score</h1>
-        <p className="text-blue-200 text-sm max-w-xs md:max-w-md mx-auto">Do you look fundable enough? Let's find out!</p>
+      <header className="mb-6 text-center">
+        <h1 className="text-4xl font-bold text-white mb-2">Fund Score</h1>
+        <p className="text-blue-200 text-lg max-w-xs md:max-w-md mx-auto">Do you look fundable enough? Let's find out!</p>
       </header>
 
       <main className="w-full max-w-4xl rounded-xl overflow-hidden grid grid-cols-1 md:grid-cols-2 shadow-xl">
